@@ -50,11 +50,11 @@ def SplittingDataSet(df1,scaler):
     model.compile(loss='mean_squared_error',optimizer='adam')
     with st.spinner("Please wait while processing...It may take upto 5 minutes.."):
         model.fit(X_train,Y_train,validation_data=(X_test,Y_test),epochs=100,batch_size=64,verbose=1)
-    st.success("Processing completed!")
     train_predict=model.predict(X_train)
     test_predict=model.predict(X_test)
     train_predict=scaler.inverse_transform(train_predict)
     test_predict=scaler.inverse_transform(test_predict)
+    st.success("Processing completed!")
     return train_predict,test_predict,model,df1,test_data,X_test
 
 def PlotGraph(train_predict,test_predict,df1,scaler):
@@ -85,6 +85,7 @@ def newGraph(model,df1,scaler,test_data,X_test):
     lst_output=[]
     n_steps=100
     i=0
+    mainVal=0
     while(i<30):
         
         if(len(temp_input)>100):
@@ -96,6 +97,9 @@ def newGraph(model,df1,scaler,test_data,X_test):
             #print(x_input)
             yhat = model.predict(x_input, verbose=0)
             print("{} day output {}".format(i,yhat))
+            inverse_data = scaler.inverse_transform(yhat)
+            if(i==29):
+                mainVal=inverse_data
             temp_input.extend(yhat[0].tolist())
             temp_input=temp_input[1:]
             #print(temp_input)
@@ -104,6 +108,9 @@ def newGraph(model,df1,scaler,test_data,X_test):
         else:
             x_input = x_input.reshape((1, n_steps,1))
             yhat = model.predict(x_input, verbose=0)
+            inverse_data = scaler.inverse_transform(yhat)
+            if(i==29):
+                mainVal=inverse_data
             print(yhat[0])
             temp_input.extend(yhat[0].tolist())
             print(len(temp_input))
@@ -123,6 +130,7 @@ def newGraph(model,df1,scaler,test_data,X_test):
     ax.legend()
     col1,col2=st.columns(2)
     col1.title("Prediction :")
+    col1.write(f"<span style=' font-size: 20px; color:white;'>The price after 30 days will be around:</span> <span style='color: green; font-size: 30px; font-weight: bold; font-style: italic;'>{mainVal[0][0]:.2f}</span>", unsafe_allow_html=True)
     col2.pyplot(fig)
     
     
@@ -165,29 +173,7 @@ def SentimentAnalyser(df):
     return average_score
 
 
-def create_gradient():
-    cmap = plt.get_cmap("RdYlGn")
-    gradient = np.linspace(0, 1, 256)
-    gradient = np.vstack((gradient, gradient))
 
-    fig, ax = plt.subplots(figsize=(4, 2))
-    ax.set_title("Sentiment Analysis Rating", fontsize=14)
-    ax.set_xticks([])
-    ax.set_yticks([])
-    ax.imshow(gradient, aspect='auto', cmap=cmap)
-    return fig
-
-
-def display_rating(sentiment_score):
-    fig = create_gradient()
-    ax = fig.gca()
-    x_pos = int(sentiment_score * 128 +128)
-    ax.plot([x_pos, x_pos], [0, 1], 'k-', linewidth=4)
-    st.pyplot(fig)
-def display_red(sentiment_score):
-    st.markdown("<style>div.stProgress > div{background-color: linear-gradient(to right, red, yellow, green);}</style>", unsafe_allow_html=True)
-    st.write("Score By Public:")
-    st.progress((sentiment_score + 1) / 2)
 def create_circular_meter(score):
     percentage = (score + 1) / 2 * 100
     angle = 90 + (percentage / 100) * 360
