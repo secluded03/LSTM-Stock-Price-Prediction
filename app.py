@@ -112,10 +112,11 @@ def newGraph(model,df1,scaler,test_data,X_test):
         
     day_new=np.arange(1,101)
     day_pred=np.arange(101,131)
-    
+    plt.figure(facecolor='black')
     fig, ax = plt.subplots(figsize=(10, 6))
-    ax.plot(day_new, scaler.inverse_transform(df1[len(df1)-100:]), label='Original Data')
-    ax.plot(day_pred, scaler.inverse_transform(lst_output), label='Predictions')
+    ax.plot(day_new, scaler.inverse_transform(df1[len(df1)-100:]), label='Original Data',linewidth=3)
+    ax.plot(day_pred, scaler.inverse_transform(lst_output), label='Predictions',linewidth=3)
+    ax.set_facecolor("black")
     ax.set_xlabel('Time')
     ax.set_ylabel('Value')
     ax.legend()
