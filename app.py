@@ -48,7 +48,7 @@ def SplittingDataSet(df1,scaler):
     model.add(LSTM(50))
     model.add(Dense(1))
     model.compile(loss='mean_squared_error',optimizer='adam')
-    with st.spinner("Please wait while processing..."):
+    with st.spinner("Please wait while processing...It may take upto 5 minutes.."):
         model.fit(X_train,Y_train,validation_data=(X_test,Y_test),epochs=100,batch_size=64,verbose=1)
     st.success("Processing completed!")
     train_predict=model.predict(X_train)
