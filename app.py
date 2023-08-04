@@ -115,7 +115,7 @@ def newGraph(model,df1,scaler,test_data,X_test):
     fig, ax = plt.subplots(figsize=(10, 6), facecolor='#0E1117')
     ax.plot(day_new, scaler.inverse_transform(df1[len(df1)-100:]), label='Original Data',linewidth=5)
     ax.plot(day_pred, scaler.inverse_transform(lst_output), label='Predictions',linewidth=5)
-    ax.set_facecolor("#0E1117")
+    ax.set_facecolor("black")
     ax.set_xlabel('Time', color='white')
     ax.set_ylabel('Value', color='white')
     ax.tick_params(axis='x', colors='white')
