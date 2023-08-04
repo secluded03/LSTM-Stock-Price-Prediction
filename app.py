@@ -207,7 +207,7 @@ def create_circular_meter(score):
         ax.plot(x, y, color='tomato', linewidth=3)
     ax.fill_between(x, y,color='#0E1117',alpha=1)
 
-    ax.text(0, 0, f"{int(percentage)}%", ha='center', va='center', fontsize=10)
+    ax.text(0, 0, f"{int(percentage)}%", ha='center', va='center', fontsize=10,color="white")
     ax.axis('equal')
     ax.axis('off')
     plt.tight_layout()
@@ -273,7 +273,7 @@ def main():
             col1.title(company_dict[company])
             col2.title("")
             col3.pyplot(fig)
-            col3.write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sentiment Score (Source: **_FinViz_**)")
+            col3.write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sentiment Score (Source: **_FinViz_**)")
             col4.write("")
             stock = yf.Ticker(company)
             hist = stock.history(period=(color+'y'))
