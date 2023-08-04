@@ -112,13 +112,14 @@ def newGraph(model,df1,scaler,test_data,X_test):
         
     day_new=np.arange(1,101)
     day_pred=np.arange(101,131)
-    plt.figure(facecolor='black')
-    fig, ax = plt.subplots(figsize=(10, 6))
-    ax.plot(day_new, scaler.inverse_transform(df1[len(df1)-100:]), label='Original Data',linewidth=3)
-    ax.plot(day_pred, scaler.inverse_transform(lst_output), label='Predictions',linewidth=3)
+    fig, ax = plt.subplots(figsize=(10, 6), facecolor='black')
+    ax.plot(day_new, scaler.inverse_transform(df1[len(df1)-100:]), label='Original Data',linewidth=5)
+    ax.plot(day_pred, scaler.inverse_transform(lst_output), label='Predictions',linewidth=5)
     ax.set_facecolor("black")
-    ax.set_xlabel('Time')
-    ax.set_ylabel('Value')
+    ax.set_xlabel('Time', color='white')
+    ax.set_ylabel('Value', color='white')
+    ax.tick_params(axis='x', colors='white')
+    ax.tick_params(axis='y', colors='white')
     ax.legend()
     col1,col2=st.columns(2)
     col1.title("Prediction :")
@@ -195,8 +196,9 @@ def create_circular_meter(score):
 
     x = r * np.cos(theta)
     y = r * np.sin(theta)
-
-    fig, ax = plt.subplots(figsize=(1, 1))
+    plt.figure(facecolor='black')
+    fig, ax = plt.subplots(figsize=(1, 1),facecolor="black")
+    ax.set_facecolor("black")
     if percentage >= 55:
         ax.plot(x, y, color='green', linewidth=3)
     elif percentage<=55 and percentage>=50:
